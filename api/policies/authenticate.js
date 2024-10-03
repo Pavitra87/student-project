@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = async function (req, res, next) {
+module.exports = async function(req, res, proceed) {
   const token = req.header("Authorization")?.split(" ")[1];
 
   // Check if token is provided
@@ -13,8 +13,9 @@ module.exports = async function (req, res, next) {
     if (err) {
       return res.status(403).send("Invalid token");
     }
-    // Attach user info to the request object
-    req.user = user;
-    next(); // Call the next middleware or route handler
+
+    req.user = user; // Attach the user info to the request
+    return proceed(); // Proceed to the next policy or controller action
   });
 };
+

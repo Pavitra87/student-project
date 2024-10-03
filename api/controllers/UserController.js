@@ -27,6 +27,7 @@ module.exports = {
         password: hashedPassword,
         role: foundRole.id,
       });
+
       res.status(200).json(user);
     } catch (error) {
       console.error("Error creating user:", error);
@@ -35,17 +36,15 @@ module.exports = {
   },
 
   //login
-
   login: async function (req, res) {
     const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ email });
-      console.log(user)
+      const user = await User.findOne({ email }).populate('role');
 
       if (!user) {
         res.status(401).json({ error: "user notfound" });
-        console.log("user notfound");
+        
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -58,19 +57,21 @@ module.exports = {
         {
           id: user.id,
           email: user.email,
-          role: user.role,
+          role: user.role ? user.role.name : null,
         },
         process.env.JWT_SECRET,
         { expiresIn: "30d" }
       );
-      console.log("error");
-      res.status(200).json({
+      console.log("User object in JWT:", {
+        email: user.email,
+        role: user.role ? user.role.name : null,
+      });
+      return res.status(200).json({
         message: "Login succesfully",
         accessToken,
         user: {
-          id: user.id,
           email: user.email,
-          role: user.role,
+          role: user.role ? user.role.name : null,
         },
       });
     } catch (error) {

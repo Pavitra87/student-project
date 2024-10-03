@@ -10,10 +10,10 @@
 
 module.exports.routes = {
   "POST /user/register": "UserController.register",
-  "POST/user/login": "UserController.login",
+  "POST /user/login": "UserController.login",
 
   //role
   "POST /role/create": "RoleController.create",
-
+  "GET /role/"        :"RoleController.find",
   "/": { view: "pages/homepage" },
 };
