@@ -18,5 +18,13 @@ module.exports = {
       model: "Role",
       required: true,
     },
+    exam: {
+      collection: "exam",
+      via: "student",
+    },
+    result: {
+      collection: "result",
+      via: "student",
+    },
   },
 };
