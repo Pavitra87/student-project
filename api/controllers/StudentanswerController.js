@@ -10,6 +10,9 @@ module.exports = {
         if (!exams) {
           return res.status(404).json({ message: 'Exam not found' });
         }
+        if (!exams.question || exams.question.length === 0) {
+          return res.status(400).json({ message: 'No questions found for this exam' });
+        }
   
         let score = 0;
   
@@ -24,7 +27,7 @@ module.exports = {
           const isCorrect = questions.correctAnswer === answer.selectedOption;
   
           // Save the student's answer in the database
-          await StudentAnswer.create({
+          await Studentanswer.create({
             student: student,
             exam: exam,
             question: questions.id,
@@ -43,14 +46,14 @@ module.exports = {
           student: student,
           exam: exam,
           score: score,
-          totalQuestions: exam.questions.length
+          totalQuestions: exams.question.length
         });
   
         // Return the result and score to the student
         return res.json({
           message: 'Answers submitted successfully',
           score: score,
-          totalQuestions: exam.questions.length
+          totalQuestions: exams.question.length
         });
   
       } catch (err) {
