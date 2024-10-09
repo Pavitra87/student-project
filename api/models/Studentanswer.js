@@ -1,15 +1,15 @@
 module.exports = {
   attributes: {
-    studentId: {
-      model: 'User', // Assuming 'User' is the model for students
+    student: {
+      model: 'user', // Assuming 'User' is the model for students
       required: true,
     },
-    examId: {
+    exam: {
       model: 'Exam', // Assuming 'Exam' is the model for exams
       required: true,
     },
-    questionId: {
-      model: 'Question', // Assuming 'Question' is the model for questions
+    question: {
+      model: 'question', // Assuming 'Question' is the model for questions
       required: true,
     },
     selectedOption: {

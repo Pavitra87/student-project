@@ -37,5 +37,9 @@ module.exports.routes = {
 
 
   //student answer
-  "POST /studentanswer/create":"StudentanswerController.submitAnswers"
+  "POST /studentanswer/create":"StudentanswerController.submitAnswers",
+  "GET /studentanswer/:studentid":"StudentanswerController.getAnswersByStudent",
+
+  //result
+    "GET /result/:studentid":"StudentanswerController.getStudentResult"
 };
